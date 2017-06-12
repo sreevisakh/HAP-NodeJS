@@ -2,6 +2,7 @@ var Accessory = require('../').Accessory;
 var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
+var spawn = require('child_process').spawn;
 
 
 // here's a fake hardware device that we'll expose to HomeKit
@@ -12,10 +13,12 @@ var FAKE_FAN = {
     if(on){
       //put your code here to turn on the fan
       FAKE_FAN.powerOn = on;
+      spawn('automate',['fan','on']);
     }
     else{
       //put your code here to turn off the fan
       FAKE_FAN.powerOn = on;
+      spawn('automate',['fan','off']);
     }
   },
   setSpeed: function(value) {
@@ -39,7 +42,7 @@ fan.pincode = "031-45-154";
 // set some basic properties (these values are arbitrary and setting them is optional)
 fan
   .getService(Service.AccessoryInformation)
-  .setCharacteristic(Characteristic.Manufacturer, "Sample Company")
+  .setCharacteristic(Characteristic.Manufacturer, "Sreevisakh Home")
 
 // listen for the "identify" event for this Accessory
 fan.on('identify', function(paired, callback) {

@@ -2,12 +2,13 @@ var Accessory = require('../').Accessory;
 var Service = require('../').Service;
 var Characteristic = require('../').Characteristic;
 var uuid = require('../').uuid;
+var spawn = require('child_process').spawn;
 
 var LightController = {
-  name: "Simple Light", //name of accessory
+  name: "Light", //name of accessory
   pincode: "031-45-154",
   username: "FA:3C:ED:5A:1A:1A", // MAC like address used by HomeKit to differentiate accessories. 
-  manufacturer: "HAP-NodeJS", //manufacturer (optional)
+  manufacturer: "Sreevisakh Home", //manufacturer (optional)
   model: "v1.0", //model (optional)
   serialNumber: "A12S345KGB", //serial number (optional)
 
@@ -21,6 +22,7 @@ var LightController = {
   setPower: function(status) { //set power of accessory
     if(this.outputLogs) console.log("Turning the '%s' %s", this.name, status ? "on" : "off");
     this.power = status;
+    spawn('automate', ['light', status? 'on': 'off']);	
   },
 
   getPower: function() { //get power of accessory
